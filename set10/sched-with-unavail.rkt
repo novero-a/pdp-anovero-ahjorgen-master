@@ -1,0 +1,58 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname sched-with-unavail) (read-case-sensitive #t) (teachpacks ((lib "image.rkt" "teachpack" "2htdp") (lib "batch-io.rkt" "teachpack" "2htdp") (lib "universe.rkt" "teachpack" "2htdp"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "image.rkt" "teachpack" "2htdp") (lib "batch-io.rkt" "teachpack" "2htdp") (lib "universe.rkt" "teachpack" "2htdp")))))
+(require "extras.rkt")
+(require rackunit)
+(define TIME-ON-TASK 10)
+
+(provide schedule/unavail-ok?)
+(provide schedule/unavail)
+
+; A CodeWalks is a ListOf<CodeWalk>
+; Represents a codewalk schedule.
+ 
+; A CodeWalk is a (make-codewalk Time ListOf<StudentID> PosInt)
+; Represents a codewalk with time, assigned students, and a max capacity.
+(define-struct codewalk (time students max))
+(define CW-TUE135 (make-codewalk TUE135 empty 1))
+(define CW-TUE325 (make-codewalk TUE325 empty 1))
+ 
+; A Time is a Symbol
+; Represents a day of week and time.
+(define TUE135 '1:35pmTues)
+(define TUE325 '3:25pmTues)
+ 
+; A StudentID is a Symbol
+; Represents a student (or pair) via their ccs ID(s).
+ 
+; A StudentUnavail is a (make-student StudentID Preferences)
+(define-struct student (id prefs))
+; Represents a student and their unavailable times.
+(define TIM (make-student '12345678910 '(TUE135)))
+(define BILL (make-student '10987654321 '(TUE135 TUE325)))
+
+; A StudentUnavails is a ListOf<StudentUnavail>
+ (define STUDENTS '(TIM-UNAVAIL BILL-UNAVAIL))
+
+; A Preferences is a ListOf<Time>
+; Represents a list of code walk times.
+
+;Implement schedule/unavail-ok?, a predicate that checks whether a schedule 
+;satisfies a list of student preferences. A schedule is valid according to some preferences if:
+;each code walk is not over capacity,
+;each student is scheduled exactly once,
+;each student is scheduled in an acceptable time slot according to their preferences.
+
+; schedule/unavail-ok? : StudentUnavails CodeWalks -> Boolean
+; Returns true if cws is a valid schedule according to the given
+; student preferences.
+(define (schedule/unavail-ok? students cws) ...)
+
+;Implement the schedule/unavail function.
+
+; schedule/unavail : StudentUnavails CodeWalks -> Maybe<CodeWalks>
+; Creates a codewalk schedule by assigning students to cws, 
+; while satisfying students' constraints.
+; Returns #f if no schedule is possible.
+; Strategy: ???
+(define (schedule/unavail students cws) ...)
